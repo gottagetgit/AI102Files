@@ -14,7 +14,7 @@ endpoint = "<your API endpoint>"
 
 computervision_client = ComputerVisionClient(endpoint, CognitiveServicesCredentials(subscription_key))
 
-remote_image_url = "https://raw.githubusercontent.com/Azure-Samples/cognitive-services-sample-data-files/master/ComputerVision/Images/landmark.jpg"
+remote_image_url = "https://github.com/gottagetgit/AI102Files/blob/main/Analyze-images-using-Computer-Vision-API/Images/Landmark.jpg"
 
 # Call API with content type (landmarks) and URL
 detect_domain_results_landmarks = computervision_client.analyze_image_by_domain("landmarks", remote_image_url)

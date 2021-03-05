@@ -20,7 +20,7 @@ This example detects celebrites and landmarks in remote images.
 '''
 print("===== Detect Domain-specific Content - remote =====")
 # URL of one or more celebrities
-remote_image_url_celebs = "https://raw.githubusercontent.com/Azure-Samples/cognitive-services-sample-data-files/master/ComputerVision/Images/faces.jpg"
+remote_image_url_celebs = "https://github.com/gottagetgit/AI102Files/blob/main/Analyze-images-using-Computer-Vision-API/Images/Faces.jpg"
 # Call API with content type (celebrities) and URL
 detect_domain_results_celebs_remote = computervision_client.analyze_image_by_domain("celebrities", remote_image_url_celebs)
 

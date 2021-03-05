@@ -20,7 +20,7 @@ This example detects common brands like logos and puts a bounding box around the
 '''
 print("===== Detect Brands - remote =====")
 # Get a URL with a brand logo
-remote_image_url = "https://docs.microsoft.com/en-us/azure/cognitive-services/computer-vision/images/gray-shirt-logo.jpg"
+remote_image_url = "https://github.com/gottagetgit/AI102Files/blob/main/Analyze-images-using-Computer-Vision-API/Images/gray-shirt-logo.jpg"
 # Select the visual feature(s) you want
 remote_image_features = ["brands"]
 # Call API with URL and features

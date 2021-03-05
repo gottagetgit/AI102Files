@@ -44,7 +44,7 @@ print()
 
 # Generate a thumbnail from a URL image
 # URL of faces
-remote_image_url_thumb = "https://raw.githubusercontent.com/Azure-Samples/cognitive-services-sample-data-files/master/ComputerVision/Images/faces.jpg"
+remote_image_url_thumb = "https://github.com/gottagetgit/AI102Files/blob/main/Analyze-images-using-Computer-Vision-API/Images/Faces.jpg"
 
 print("Generating thumbnail from a URL image...")
 # Returns a Generator object, a thumbnail image binary (list).
