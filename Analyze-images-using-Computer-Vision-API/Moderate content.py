@@ -39,7 +39,7 @@ The score is ranged 0.0 - 1.0 with smaller numbers indicating negative results.
 '''
 print("===== Detect Adult or Racy Content - local =====")
 # Open local file
-local_image_path = "<folder\\image.jpg?"
+local_image_path = "<folder\\image.jpg>"
 local_image = open(local_image_path, "rb")
 # Select visual features you want
 local_image_features = ["adult"]
