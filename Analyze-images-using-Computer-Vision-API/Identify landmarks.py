@@ -14,7 +14,7 @@ endpoint = "<your API endpoint>"
 
 computervision_client = ComputerVisionClient(endpoint, CognitiveServicesCredentials(subscription_key))
 
-remote_image_url = "https://github.com/gottagetgit/AI102Files/blob/main/Analyze-images-using-Computer-Vision-API/Images/Landmark.jpg"
+remote_image_url = "https://raw.githubusercontent.com/Azure-Samples/cognitive-services-sample-data-files/master/ComputerVision/Images/landmark.jpg"
 
 # Call API with content type (landmarks) and URL
 detect_domain_results_landmarks = computervision_client.analyze_image_by_domain("landmarks", remote_image_url)
@@ -34,7 +34,7 @@ This example detects landmarks in local images.
 print("===== Detect Domain-specific Content - local =====")
 
 # Open local image file containing a landmark
-local_image_path_landmark = "Images/Landmark.jpg"
+local_image_path_landmark = "Images\\Landmark.jpg"
 local_image_landmark = open(local_image_path_landmark, "rb")
 # Call API with type of content (landmark) and local image
 detect_domain_results_landmark_local = computervision_client.analyze_image_by_domain_in_stream("landmarks", local_image_landmark)
@@ -51,5 +51,3 @@ print()
 '''
 END - Detect Domain-specific Content - local
 '''
-
-print("===== Detect Domain-specific Content - remote =====")
