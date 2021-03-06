@@ -12,8 +12,8 @@ from matplotlib.patches import Polygon
 from PIL import Image
 from io import BytesIO
 
-subscription_key = "<your subscription key>"
-endpoint = "<your API endpoint>"
+subscription_key = "7c9ff1054a03419eaf3ffed8de65c6c0"
+endpoint = "https://azcogsvc.cognitiveservices.azure.com/"
 
 text_recognition_url = endpoint + "/vision/v3.1/read/analyze"
 
