@@ -38,7 +38,7 @@ This example detects celebrites and landmarks in local images.
 '''
 print("===== Detect Domain-specific Content - local =====")
 # Open local image file containing a celebritie
-local_image_path_celebrity = "../Images/Faces.jpg"
+local_image_path_celebrity = "../Extract_text_from_images/Images/Faces.jpg"
 local_image_celebrity = open(local_image_path_celebrity, "rb")
 # Call API with the type of content (celebrities) and local image
 detect_domain_results_celebs_local = computervision_client.analyze_image_by_domain_in_stream("celebrities", local_image_celebrity)
