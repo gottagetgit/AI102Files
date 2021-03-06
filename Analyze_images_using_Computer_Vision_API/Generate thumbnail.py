@@ -21,7 +21,7 @@ This example creates a thumbnail from both a local and URL image.
 print("===== Generate Thumbnail =====")
 
 # Generate a thumbnail from a local image
-local_image_path_thumb = "Images/Faces.jpg"
+local_image_path_thumb = "../Extract_text_from_images/Images/Faces.jpg"
 local_image_thumb = open(local_image_path_thumb, "rb")
 
 print("Generating thumbnail from a local image...")

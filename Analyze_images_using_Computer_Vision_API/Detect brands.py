@@ -41,7 +41,7 @@ This example detects common brands like logos and puts a bounding box around the
 '''
 print("===== Detect Brands - local =====")
 # Open image file
-local_image_path_shirt = "Images/gray-shirt-logo.jpg"
+local_image_path_shirt = "../Extract_text_from_images/Images/gray-shirt-logo.jpg"
 local_image_shirt = open(local_image_path_shirt, "rb")
 # Select the visual feature(s) you want
 local_image_features = ["brands"]

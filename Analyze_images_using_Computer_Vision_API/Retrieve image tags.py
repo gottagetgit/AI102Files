@@ -38,7 +38,7 @@ This example returns a tag (key word) for each thing in the image.
 '''
 print("===== Tag an Image - local =====")
 # Open local image file
-local_image_path = "Images/Landmark.jpg"
+local_image_path = "../Extract_text_from_images/Images/Landmark.jpg"
 local_image = open(local_image_path, "rb")
 # Call API local image
 tags_result_local = computervision_client.tag_image_in_stream(local_image)
