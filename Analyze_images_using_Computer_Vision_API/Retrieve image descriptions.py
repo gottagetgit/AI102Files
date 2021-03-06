@@ -37,7 +37,7 @@ This example describes the contents of an image with the confidence score.
 '''
 print("===== Describe an Image - local =====")
 # Open local image file
-local_image_path = "Images/Landmark.jpg"
+local_image_path = "../Images/Landmark.jpg"
 local_image = open(local_image_path, "rb")
 
 # Call API
