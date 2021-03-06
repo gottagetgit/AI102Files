@@ -9,8 +9,8 @@ from PIL import Image
 import sys
 import time
 
-subscription_key = "96986d398f884a85b67f5d11657bd051"
-endpoint = "https://azcogsvc.cognitiveservices.azure.com/"
+subscription_key = "<your subscription key>"
+endpoint = "<your API endpoint>"
 
 computervision_client = ComputerVisionClient(endpoint, CognitiveServicesCredentials(subscription_key))
 
