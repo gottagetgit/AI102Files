@@ -9,7 +9,7 @@ from PIL import Image
 import sys
 import time
 
-subscription_key = "7c9ff1054a03419eaf3ffed8de65c6c0"
+subscription_key = "46bd0636d83f4829ac745ff2c9ee2195"
 endpoint = "https://azcogsvc.cognitiveservices.azure.com/"
 
 computervision_client = ComputerVisionClient(endpoint, CognitiveServicesCredentials(subscription_key))
@@ -20,7 +20,7 @@ This example detects celebrites and landmarks in remote images.
 '''
 print("===== Detect Domain-specific Content - remote =====")
 # URL of one or more celebrities
-remote_image_url_celebs = "https://raw.githubusercontent.com/gottagetgit/AI102Files/main/Analyze_images_using_Computer_Vision_API/Images/Faces.jpg"
+remote_image_url_celebs = "https://raw.githubusercontent.com/Azure-Samples/cognitive-services-sample-data-files/master/ComputerVision/Images/faces.jpg"
 # Call API with content type (celebrities) and URL
 detect_domain_results_celebs_remote = computervision_client.analyze_image_by_domain("celebrities", remote_image_url_celebs)
 
@@ -31,14 +31,14 @@ if len(detect_domain_results_celebs_remote.result["celebrities"]) == 0:
 else:
     for celeb in detect_domain_results_celebs_remote.result["celebrities"]:
         print(celeb["name"])
-
+print()
 '''
 Detect Domain-specific Content - local
 This example detects celebrites and landmarks in local images.
 '''
 print("===== Detect Domain-specific Content - local =====")
 # Open local image file containing a celebritie
-local_image_path_celebrity = "../Analyze_images_using_Computer_Vision_API/Images/Faces.jpg"
+local_image_path_celebrity = "Images\\Faces.jpg"
 local_image_celebrity = open(local_image_path_celebrity, "rb")
 # Call API with the type of content (celebrities) and local image
 detect_domain_results_celebs_local = computervision_client.analyze_image_by_domain_in_stream("celebrities", local_image_celebrity)

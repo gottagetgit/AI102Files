@@ -9,12 +9,12 @@ from PIL import Image
 import sys
 import time
 
-subscription_key = "<your subscription key>"
-endpoint = "<your API endpoint>"
+subscription_key = "46bd0636d83f4829ac745ff2c9ee2195"
+endpoint = "https://azcogsvc.cognitiveservices.azure.com/"
 
 computervision_client = ComputerVisionClient(endpoint, CognitiveServicesCredentials(subscription_key))
 
-remote_image_url = "https://github.com/gottagetgit/AI102Files/blob/main/Analyze-images-using-Computer-Vision-API/Images/Landmark.jpg"
+remote_image_url = "https://raw.githubusercontent.com/gottagetgit/AI102Files/main/Analyze_images_using_Computer_Vision_API/Images/Landmark.jpg"
 
 '''
 Tag an Image - remote
@@ -38,7 +38,7 @@ This example returns a tag (key word) for each thing in the image.
 '''
 print("===== Tag an Image - local =====")
 # Open local image file
-local_image_path = "../Extract_text_from_images/Images/Landmark.jpg"
+local_image_path = "Images\\Landmark.jpg"
 local_image = open(local_image_path, "rb")
 # Call API local image
 tags_result_local = computervision_client.tag_image_in_stream(local_image)

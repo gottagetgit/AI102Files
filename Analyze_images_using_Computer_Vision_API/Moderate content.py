@@ -37,6 +37,7 @@ Detect Adult or Racy Content - local
 This example detects adult or racy content in a local image, then prints the adult/racy score.
 The score is ranged 0.0 - 1.0 with smaller numbers indicating negative results.
 '''
+print()
 print("===== Detect Adult or Racy Content - local =====")
 # Open local file
 local_image_path = "<folder\\image.jpg>"

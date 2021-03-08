@@ -9,12 +9,12 @@ from PIL import Image
 import sys
 import time
 
-subscription_key = "<your subscription key>"
-endpoint = "<your API endpoint>"
+subscription_key = "46bd0636d83f4829ac745ff2c9ee2195"
+endpoint = "https://azcogsvc.cognitiveservices.azure.com/"
 
 computervision_client = ComputerVisionClient(endpoint, CognitiveServicesCredentials(subscription_key))
 
-remote_image_url = "https://github.com/gottagetgit/AI102Files/blob/main/Analyze-images-using-Computer-Vision-API/Images/Landmark.jpg"
+remote_image_url = "https://raw.githubusercontent.com/gottagetgit/AI102Files/main/Analyze_images_using_Computer_Vision_API/Images/Landmark.jpg"
 '''
 Describe an Image - remote
 This example describes the contents of an image with the confidence score.
@@ -37,7 +37,7 @@ This example describes the contents of an image with the confidence score.
 '''
 print("===== Describe an Image - local =====")
 # Open local image file
-local_image_path = "../Extract_text_from_images/Images/Landmark.jpg"
+local_image_path = "Images\\Landmark.jpg"
 local_image = open(local_image_path, "rb")
 
 # Call API

@@ -9,8 +9,8 @@ from PIL import Image
 import sys
 import time
 
-subscription_key = "<your subscription key>"
-endpoint = "<your API endpoint>"
+subscription_key = "46bd0636d83f4829ac745ff2c9ee2195"
+endpoint = "https://azcogsvc.cognitiveservices.azure.com/"
 
 computervision_client = ComputerVisionClient(endpoint, CognitiveServicesCredentials(subscription_key))
 
@@ -20,7 +20,7 @@ This example detects common brands like logos and puts a bounding box around the
 '''
 print("===== Detect Brands - remote =====")
 # Get a URL with a brand logo
-remote_image_url = "https://github.com/gottagetgit/AI102Files/blob/main/Analyze-images-using-Computer-Vision-API/Images/gray-shirt-logo.jpg"
+remote_image_url = "https://raw.githubusercontent.com/gottagetgit/AI102Files/main/Analyze_images_using_Computer_Vision_API/Images/gray-shirt-logo.jpg"
 # Select the visual feature(s) you want
 remote_image_features = ["brands"]
 # Call API with URL and features
@@ -41,7 +41,7 @@ This example detects common brands like logos and puts a bounding box around the
 '''
 print("===== Detect Brands - local =====")
 # Open image file
-local_image_path_shirt = "../Extract_text_from_images/Images/gray-shirt-logo.jpg"
+local_image_path_shirt = "Images\\gray-shirt-logo.jpg"
 local_image_shirt = open(local_image_path_shirt, "rb")
 # Select the visual feature(s) you want
 local_image_features = ["brands"]

@@ -1,67 +1,47 @@
-import json
+from azure.cognitiveservices.vision.computervision import ComputerVisionClient
+from azure.cognitiveservices.vision.computervision.models import OperationStatusCodes
+from azure.cognitiveservices.vision.computervision.models import VisualFeatureTypes
+from msrest.authentication import CognitiveServicesCredentials
+
+from array import array
 import os
+from PIL import Image
 import sys
-import requests
 import time
 
-# If you are using a Jupyter Notebook, uncomment the following line.
-# %matplotlib inline
+subscription_key = "46bd0636d83f4829ac745ff2c9ee2195"
+endpoint = "https://azcogsvc.cognitiveservices.azure.com/"
 
-import matplotlib.pyplot as plt
-from matplotlib.patches import Polygon
-from PIL import Image
-from io import BytesIO
+computervision_client = ComputerVisionClient(endpoint, CognitiveServicesCredentials(subscription_key))
 
-subscription_key = "<your key>"
-endpoint = "<your endpoint>"
+'''
+Batch Read File, recognize handwritten text - remote
+This example will extract handwritten text in an image, then print results, line by line.
+This API call can also recognize handwriting (not shown).
+'''
+print("===== Batch Read File - remote =====")
+# Get an image with handwritten text
+remote_image_handw_text_url = "https://raw.githubusercontent.com/MicrosoftDocs/azure-docs/master/articles/cognitive-services/Computer-vision/Images/readsample.jpg"
 
-text_recognition_url = endpoint + "/vision/v3.1/read/analyze"
+# Call API with URL and raw response (allows you to get the operation location)
+recognize_handw_results = computervision_client.read(remote_image_handw_text_url,  raw=True)
 
-# Set image_url to the URL of an image that you want to recognize.
-image_url = "https://raw.githubusercontent.com/MicrosoftDocs/azure-docs/master/articles/cognitive-services/Computer-vision/Images/readsample.jpg"
+# Get the operation location (URL with an ID at the end) from the response
+operation_location_remote = recognize_handw_results.headers["Operation-Location"]
+# Grab the ID from the URL
+operation_id = operation_location_remote.split("/")[-1]
 
-headers = {'Ocp-Apim-Subscription-Key': subscription_key}
-data = {'url': image_url}
-response = requests.post(
-    text_recognition_url, headers=headers, json=data)
-response.raise_for_status()
-
-# Extracting text requires two API calls: One call to submit the
-# image for processing, the other to retrieve the text found in the image.
-
-# Holds the URI used to retrieve the recognized text.
-operation_url = response.headers["Operation-Location"]
-
-# The recognized text isn't immediately available, so poll to wait for completion.
-analysis = {}
-poll = True
-while (poll):
-    response_final = requests.get(
-        response.headers["Operation-Location"], headers=headers)
-    analysis = response_final.json()
-
-    print(json.dumps(analysis, indent=4))
-
+# Call the "GET" API and wait for it to retrieve the results
+while True:
+    get_handw_text_results = computervision_client.get_read_result(operation_id)
+    if get_handw_text_results.status not in ['notStarted', 'running']:
+        break
     time.sleep(1)
-    if ("analyzeResult" in analysis):
-        poll = False
-    if ("status" in analysis and analysis['status'] == 'failed'):
-        poll = False
 
-polygons = []
-if ("analyzeResult" in analysis):
-    # Extract the recognized text, with bounding boxes.
-    polygons = [(line["boundingBox"], line["text"])
-                for line in analysis["analyzeResult"]["readResults"][0]["lines"]]
-
-# Display the image and overlay it with the extracted text.
-image = Image.open(BytesIO(requests.get(image_url).content))
-ax = plt.imshow(image)
-for polygon in polygons:
-    vertices = [(polygon[0][i], polygon[0][i + 1])
-                for i in range(0, len(polygon[0]), 2)]
-    text = polygon[1]
-    patch = Polygon(vertices, closed=True, fill=False, linewidth=2, color='y')
-    ax.axes.add_patch(patch)
-    plt.text(vertices[0][0], vertices[0][1], text, fontsize=20, va="top")
-plt.show()
+# Print the detected text, line by line
+if get_handw_text_results.status == OperationStatusCodes.succeeded:
+    for text_result in get_handw_text_results.analyze_result.read_results:
+        for line in text_result.lines:
+            print(line.text)
+            print(line.bounding_box)
+print()

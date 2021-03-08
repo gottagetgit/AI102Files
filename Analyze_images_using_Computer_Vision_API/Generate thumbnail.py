@@ -9,8 +9,8 @@ from PIL import Image
 import sys
 import time
 
-subscription_key = "<your subscription key>"
-endpoint = "<your API endpoint>"
+subscription_key = "46bd0636d83f4829ac745ff2c9ee2195"
+endpoint = "https://azcogsvc.cognitiveservices.azure.com/"
 
 computervision_client = ComputerVisionClient(endpoint, CognitiveServicesCredentials(subscription_key))
 
@@ -18,10 +18,10 @@ computervision_client = ComputerVisionClient(endpoint, CognitiveServicesCredenti
 Generate Thumbnail
 This example creates a thumbnail from both a local and URL image.
 '''
-print("===== Generate Thumbnail =====")
+print("===== Detect Brands - local =====")
 
 # Generate a thumbnail from a local image
-local_image_path_thumb = "../Extract_text_from_images/Images/Faces.jpg"
+local_image_path_thumb = "Images\\Faces.jpg"
 local_image_thumb = open(local_image_path_thumb, "rb")
 
 print("Generating thumbnail from a local image...")
@@ -41,10 +41,10 @@ with open("thumb_local.png", "wb") as f:
 
 print("Thumbnail saved to local folder.")
 print()
-
+print("===== Detect Brands - remote =====")
 # Generate a thumbnail from a URL image
 # URL of faces
-remote_image_url_thumb = "https://github.com/gottagetgit/AI102Files/blob/main/Analyze-images-using-Computer-Vision-API/Images/Faces.jpg"
+remote_image_url_thumb = "https://raw.githubusercontent.com/gottagetgit/AI102Files/main/Analyze_images_using_Computer_Vision_API/Images/Faces.jpg"
 
 print("Generating thumbnail from a URL image...")
 # Returns a Generator object, a thumbnail image binary (list).

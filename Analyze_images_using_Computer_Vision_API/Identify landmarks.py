@@ -9,8 +9,8 @@ from PIL import Image
 import sys
 import time
 
-subscription_key = "<your subscription key>"
-endpoint = "<your API endpoint>"
+subscription_key = "46bd0636d83f4829ac745ff2c9ee2195"
+endpoint = "https://azcogsvc.cognitiveservices.azure.com/"
 
 computervision_client = ComputerVisionClient(endpoint, CognitiveServicesCredentials(subscription_key))
 
@@ -18,8 +18,7 @@ remote_image_url = "https://raw.githubusercontent.com/Azure-Samples/cognitive-se
 
 # Call API with content type (landmarks) and URL
 detect_domain_results_landmarks = computervision_client.analyze_image_by_domain("landmarks", remote_image_url)
-print()
-
+print("===== Detect Domain-specific Content - Remote =====")
 print("Landmarks in the remote image:")
 if len(detect_domain_results_landmarks.result["landmarks"]) == 0:
     print("No landmarks detected.")
@@ -31,6 +30,7 @@ else:
 Detect Domain-specific Content - local
 This example detects landmarks in local images.
 '''
+print()
 print("===== Detect Domain-specific Content - local =====")
 
 # Open local image file containing a landmark
@@ -38,7 +38,6 @@ local_image_path_landmark = "Images\\Landmark.jpg"
 local_image_landmark = open(local_image_path_landmark, "rb")
 # Call API with type of content (landmark) and local image
 detect_domain_results_landmark_local = computervision_client.analyze_image_by_domain_in_stream("landmarks", local_image_landmark)
-print()
 
 # Print results of landmark detected
 print("Landmarks in the local image:")
@@ -47,7 +46,6 @@ if len(detect_domain_results_landmark_local.result["landmarks"]) == 0:
 else:
     for landmark in detect_domain_results_landmark_local.result["landmarks"]:
         print(landmark["name"])
-print()
 '''
 END - Detect Domain-specific Content - local
 '''
