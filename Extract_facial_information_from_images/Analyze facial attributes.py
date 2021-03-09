@@ -1,11 +1,10 @@
 import requests
 import matplotlib.pyplot as plt
-import simplejson
 from PIL import Image
 from matplotlib import patches
 from io import BytesIO
 import os
-import simplejson as json
+import json
 
 def config():
     print("Call Config")
@@ -14,7 +13,7 @@ def config():
 image_path = os.path.join(r'C:\Users\Jordi\PycharmProjects\AI102Files\Extract_facial_information_from_images\CapFrame.jpg')
 image_data = open(image_path, "rb")
 
-subscription_key = "7a27910ff6d04cb9bedb85cfbdacb184"
+subscription_key = "307a23880fab41f89918495c1fb91cdc"
 face_api_url = 'https://azcogsvc.cognitiveservices.azure.com/face/v1.0/detect'
 
 headers = {'Content-Type': 'application/octet-stream',
@@ -30,3 +29,5 @@ response = requests.post(face_api_url, params=params, headers=headers, data=imag
 response.raise_for_status()
 faces = response.json()
 print(faces)
+with open("faces.json", "w") as faces_file:
+    json.dump(faces, faces_file, indent=4, sort_keys=True)
