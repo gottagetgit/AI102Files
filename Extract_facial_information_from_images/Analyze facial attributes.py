@@ -13,7 +13,7 @@ def config():
 image_path = os.path.join(r'C:\Users\Jordi\PycharmProjects\AI102Files\Extract_facial_information_from_images\CapFrame.jpg')
 image_data = open(image_path, "rb")
 
-subscription_key = "307a23880fab41f89918495c1fb91cdc"
+subscription_key = "<your key>"
 face_api_url = 'https://azcogsvc.cognitiveservices.azure.com/face/v1.0/detect'
 
 headers = {'Content-Type': 'application/octet-stream',

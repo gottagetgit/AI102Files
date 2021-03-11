@@ -9,8 +9,8 @@ from PIL import Image
 import sys
 import time
 
-subscription_key = "46bd0636d83f4829ac745ff2c9ee2195"
-endpoint = "https://azcogsvc.cognitiveservices.azure.com/"
+subscription_key = "<your key>"
+endpoint = "<your endpoint URL>"
 
 computervision_client = ComputerVisionClient(endpoint, CognitiveServicesCredentials(subscription_key))
 
@@ -19,6 +19,7 @@ Recognize Printed Text with OCR - local
 This example will extract, using OCR, printed text in an image, then print results line by line.
 '''
 print("===== Detect Printed Text with OCR - local =====")
+print()
 # Get an image with printed text
 local_image_printed_text_path = "Images\\printed_text.jpg"
 local_image_printed_text = open(local_image_printed_text_path, "rb")
@@ -31,15 +32,19 @@ for region in ocr_result_local.regions:
         for word in line.words:
             s += word.text + " "
         print(s)
+
 '''
 END - Recognize Printed Text with OCR - local
 '''
+
 print()
+
 '''
 Recognize Printed Text with OCR - remote
 This example will extract, using OCR, printed text in an image, then print results line by line.
 '''
 print("===== Detect Printed Text with OCR - remote =====")
+print()
 remote_printed_text_image_url = "https://raw.githubusercontent.com/Azure-Samples/cognitive-services-sample-data-files/master/ComputerVision/Images/printed_text.jpg"
 
 ocr_result_remote = computervision_client.recognize_printed_text(remote_printed_text_image_url)

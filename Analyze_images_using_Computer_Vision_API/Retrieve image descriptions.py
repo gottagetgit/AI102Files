@@ -9,8 +9,8 @@ from PIL import Image
 import sys
 import time
 
-subscription_key = "46bd0636d83f4829ac745ff2c9ee2195"
-endpoint = "https://azcogsvc.cognitiveservices.azure.com/"
+subscription_key = "<your key>"
+endpoint = "<your endpoint URL>"
 
 computervision_client = ComputerVisionClient(endpoint, CognitiveServicesCredentials(subscription_key))
 
@@ -30,7 +30,7 @@ if (len(description_results.captions) == 0):
 else:
     for caption in description_results.captions:
         print("'{}' with confidence {:.2f}%".format(caption.text, caption.confidence * 100))
-
+print()
 '''
 Describe an Image - local
 This example describes the contents of an image with the confidence score.
@@ -50,7 +50,7 @@ if (len(description_result.captions) == 0):
 else:
     for caption in description_result.captions:
         print("'{}' with confidence {:.2f}%".format(caption.text, caption.confidence * 100))
-print()
+
 '''
 END - Describe an Image - local
 '''
