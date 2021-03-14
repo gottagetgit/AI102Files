@@ -17,7 +17,6 @@ computervision_client = ComputerVisionClient(endpoint, CognitiveServicesCredenti
 '''
 Batch Read File, recognize handwritten text - remote
 This example will extract handwritten text in an image, then print results, line by line.
-This API call can also recognize handwriting (not shown).
 '''
 print("===== Batch Read File - remote =====")
 # Get an image with handwritten text
