@@ -9,8 +9,8 @@ from PIL import Image
 import sys
 import time
 
-subscription_key = "<your key>"
-endpoint = "<your endpoint URL>"
+subscription_key = "<enter your key here>"
+endpoint = "<enter your endpoint URL here>"
 
 computervision_client = ComputerVisionClient(endpoint, CognitiveServicesCredentials(subscription_key))
 

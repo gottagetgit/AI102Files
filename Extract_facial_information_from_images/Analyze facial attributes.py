@@ -16,8 +16,8 @@ image_path = os.path.join(r'C:\Users\Jordi\PycharmProjects\AI102Files\Extract_fa
                           r'.jpg')
 image_data = open(image_path, "rb")
 
-subscription_key = "<your key>"
-face_api_url = 'https://azcogsvc.cognitiveservices.azure.com/face/v1.0/detect'
+subscription_key = "<enter your key>"
+face_api_url = "<place your endpoint URL here>"
 
 headers = {'Content-Type': 'application/octet-stream',
            'Ocp-Apim-Subscription-Key': subscription_key}

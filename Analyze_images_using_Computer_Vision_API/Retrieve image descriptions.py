@@ -9,8 +9,8 @@ from PIL import Image
 import sys
 import time
 
-subscription_key = "<your key>"
-endpoint = "<your endpoint URL>"
+subscription_key = "<enter your key here>"
+endpoint = "<enter your endpoint URL here>"
 
 computervision_client = ComputerVisionClient(endpoint, CognitiveServicesCredentials(subscription_key))
 
@@ -25,7 +25,7 @@ description_results = computervision_client.describe_image(remote_image_url )
 
 # Get the captions (descriptions) from the response, with confidence level
 print("Description of remote image: ")
-if (len(description_results.captions) == 0):
+if len(description_results.captions) == 0:
     print("No description detected.")
 else:
     for caption in description_results.captions:
@@ -45,7 +45,7 @@ description_result = computervision_client.describe_image_in_stream(local_image)
 
 # Get the captions (descriptions) from the response, with confidence level
 print("Description of local image: ")
-if (len(description_result.captions) == 0):
+if len(description_result.captions) == 0:
     print("No description detected.")
 else:
     for caption in description_result.captions:

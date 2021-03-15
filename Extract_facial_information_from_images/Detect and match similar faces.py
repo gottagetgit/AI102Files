@@ -9,16 +9,13 @@ import requests
 from urllib.parse import urlparse
 from io import BytesIO
 
-# To install this module, run:
-# python -m pip install Pillow
-
 from PIL import Image, ImageDraw
 from azure.cognitiveservices.vision.face import FaceClient
 from msrest.authentication import CognitiveServicesCredentials
 from azure.cognitiveservices.vision.face.models import TrainingStatusType, Person
 
-subscription_key = "<your key>"
-endpoint = "<your endpoint URL>"
+subscription_key = "<enter your key here>"
+endpoint = "<enter your endpoint URL here>"
 
 # Create an authenticated FaceClient.
 face_client = FaceClient(endpoint, CognitiveServicesCredentials(subscription_key))

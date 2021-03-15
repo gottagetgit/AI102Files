@@ -4,8 +4,8 @@ from azure.ai.formrecognizer import FormRecognizerClient
 from azure.ai.formrecognizer import FormTrainingClient
 from azure.core.credentials import AzureKeyCredential
 
-key = "<your key>"
-endpoint = "<your endpoint URL>"
+key = "<enter your key here>"
+endpoint = "<enter your endpoint URL here>"
 
 form_recognizer_client = FormRecognizerClient(endpoint, AzureKeyCredential(key))
 form_training_client = FormTrainingClient(endpoint, AzureKeyCredential(key))

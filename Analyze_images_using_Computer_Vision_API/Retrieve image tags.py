@@ -9,8 +9,8 @@ from PIL import Image
 import sys
 import time
 
-subscription_key = "<your key>"
-endpoint = "<your endpoint URL>"
+subscription_key = "<enter your key here>"
+endpoint = "<enter your endpoint URL here>"
 
 computervision_client = ComputerVisionClient(endpoint, CognitiveServicesCredentials(subscription_key))
 
@@ -26,7 +26,7 @@ tags_result_remote = computervision_client.tag_image(remote_image_url )
 
 # Print results with confidence score
 print("Tags in the remote image: \n")
-if (len(tags_result_remote.tags) == 0):
+if len(tags_result_remote.tags) == 0:
     print("No tags detected.")
 else:
     for tag in tags_result_remote.tags:
@@ -45,7 +45,7 @@ tags_result_local = computervision_client.tag_image_in_stream(local_image)
 
 # Print results with confidence score
 print("Tags in the local image: \n")
-if (len(tags_result_local.tags) == 0):
+if len(tags_result_local.tags) == 0:
     print("No tags detected.")
 else:
     for tag in tags_result_local.tags:

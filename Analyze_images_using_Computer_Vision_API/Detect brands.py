@@ -9,8 +9,8 @@ from PIL import Image
 import sys
 import time
 
-subscription_key = "<your key>"
-endpoint = "<your endpoint URL>"
+subscription_key = "<enter your key here>"
+endpoint = "<enter your endpoint URL here>"
 
 computervision_client = ComputerVisionClient(endpoint, CognitiveServicesCredentials(subscription_key))
 
@@ -31,9 +31,9 @@ if len(detect_brands_results_remote.brands) == 0:
     print("No brands detected.")
 else:
     for brand in detect_brands_results_remote.brands:
-        print("'{}' brand detected with confidence {:.1f}% at location {}, {}, {}, {}".format( \
-        brand.name, brand.confidence * 100, brand.rectangle.x, brand.rectangle.x + brand.rectangle.w, \
-        brand.rectangle.y, brand.rectangle.y + brand.rectangle.h))
+        print("'{}' brand detected with confidence {:.1f}% at location {}, {}, {}, {}".format(
+            brand.name, brand.confidence * 100, brand.rectangle.x, brand.rectangle.x + brand.rectangle.w,
+            brand.rectangle.y, brand.rectangle.y + brand.rectangle.h))
 print()
 '''
 Detect Brands - local
@@ -54,9 +54,9 @@ if len(detect_brands_results_local.brands) == 0:
     print("No brands detected.")
 else:
     for brand in detect_brands_results_local.brands:
-        print("'{}' brand detected with confidence {:.1f}% at location {}, {}, {}, {}".format( \
-        brand.name, brand.confidence * 100, brand.rectangle.x, brand.rectangle.x + brand.rectangle.w, \
-        brand.rectangle.y, brand.rectangle.y + brand.rectangle.h))
+        print("'{}' brand detected with confidence {:.1f}% at location {}, {}, {}, {}".format(
+            brand.name, brand.confidence * 100, brand.rectangle.x, brand.rectangle.x + brand.rectangle.w,
+            brand.rectangle.y, brand.rectangle.y + brand.rectangle.h))
 print()
 '''
 END - Detect brands - local

@@ -14,10 +14,10 @@ from msrest.authentication import CognitiveServicesCredentials
 from azure.cognitiveservices.vision.face.models import TrainingStatusType, Person
 
 # This key will serve all examples in this document.
-KEY = "<your key>"
+KEY = "<enter your key>"
 
 # This endpoint will be used in all examples in this quickstart.
-ENDPOINT = "<your endpoint URL>"
+ENDPOINT = "<place your endpoint URL here>"
 
 # Base url for the Verify and Facelist/Large Facelist operations
 IMAGE_BASE_URL = 'https://csdx.blob.core.windows.net/resources/Face/Images/'
@@ -42,10 +42,8 @@ face_client = FaceClient(ENDPOINT, CognitiveServicesCredentials(KEY))
 END - Authenticate
 '''
 
-'''
-Create/Train/Detect/Identify Person Group
-This example creates a Person Group, then trains it. It can then be used to detect and identify faces in other group images.
-'''
+'''Create/Train/Detect/Identify Person Group This example creates a Person Group, then trains it. It can then be used 
+to detect and identify faces in other group images. '''
 
 print()
 print('PERSON GROUP OPERATIONS')
@@ -98,13 +96,13 @@ print('Training the person group...')
 # Train the person group
 face_client.person_group.train(PERSON_GROUP_ID)
 
-while (True):
+while True:
     training_status = face_client.person_group.get_training_status(PERSON_GROUP_ID)
     print("Training status: {}.".format(training_status.status))
     print()
-    if (training_status.status is TrainingStatusType.succeeded):
+    if training_status.status is TrainingStatusType.succeeded:
         break
-    elif (training_status.status is TrainingStatusType.failed):
+    elif training_status.status is TrainingStatusType.failed:
         sys.exit('Training the person group has failed.')
     time.sleep(5)
 
@@ -132,11 +130,7 @@ if not results:
     print('No person identified in the person group for faces from {}.'.format(os.path.basename(image.name)))
 for person in results:
     if len(person.candidates) > 0:
-        print('Person for face ID {} is identified in {} with a confidence of {}.'.format(person.face_id,
-                                                                                          os.path.basename(image.name),
-                                                                                          person.candidates[
-                                                                                              0].confidence))  # Get
-        # topmost confidence score
+        print('Person for face ID {} is identified in {} with a confidence of {}.'.format(person.face_id, os.path.basename(image.name), person.candidates[0].confidence))  # Get topmost confidence score
     else:
         print('No person identified for face ID {} in {}.'.format(person.face_id, os.path.basename(image.name)))
 
@@ -144,11 +138,3 @@ print()
 '''
 END - Create/Train/Detect/Identify Person Group
 '''
-
-# Open an image
-image_path = os.path.join('data', 'face', 'store_cam1.jpg')
-image_stream = open(image_path, "rb")
-
-# Detect faces and specified facial attributes
-attributes = ['age', 'emotion']
-detected_faces = face_client.face.detect_with_stream(image=image_stream, return_face_attributes=attributes)
