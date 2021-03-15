@@ -25,10 +25,10 @@ IMAGE_BASE_URL = 'https://csdx.blob.core.windows.net/resources/Face/Images/'
 # Used in the Person Group Operations and Delete Person Group examples.
 # You can call list_person_groups to print a list of preexisting PersonGroups.
 # SOURCE_PERSON_GROUP_ID should be all lowercase and alphanumeric. For example, 'mygroupname' (dashes are OK).
-PERSON_GROUP_ID = str(uuid.uuid4()) # assign a random ID (or name it anything)
+PERSON_GROUP_ID = str(uuid.uuid4())  # assign a random ID (or name it anything)
 
 # Used for the Delete Person Group example.
-TARGET_PERSON_GROUP_ID = str(uuid.uuid4()) # assign a random ID (or name it anything)
+TARGET_PERSON_GROUP_ID = str(uuid.uuid4())  # assign a random ID (or name it anything)
 
 '''
 Authenticate
@@ -116,7 +116,7 @@ test_image_array = glob.glob('test-image-person-group.jpg')
 image = open(test_image_array[0], 'r+b')
 
 print('Pausing for 60 seconds to avoid triggering rate limit on free account...')
-time.sleep (60)
+time.sleep(60)
 
 # Detect faces
 face_ids = []
@@ -129,12 +129,16 @@ for face in faces:
 results = face_client.face.identify(face_ids, PERSON_GROUP_ID)
 print('Identifying faces in {}'.format(os.path.basename(image.name)))
 if not results:
-    print('No pearson identified in the person group for faces from {}.'.format(os.path.basename(image.name)))
+    print('No person identified in the person group for faces from {}.'.format(os.path.basename(image.name)))
 for person in results:
-	if len(person.candidates) > 0:
-		print('Pearson for face ID {} is identified in {} with a confidence of {}.'.format(person.face_id, os.path.basename(image.name), person.candidates[0].confidence)) # Get topmost confidence score
-	else:
-		print('No pearson identified for face ID {} in {}.'.format(person.face_id, os.path.basename(image.name)))
+    if len(person.candidates) > 0:
+        print('Person for face ID {} is identified in {} with a confidence of {}.'.format(person.face_id,
+                                                                                          os.path.basename(image.name),
+                                                                                          person.candidates[
+                                                                                              0].confidence))  # Get
+        # topmost confidence score
+    else:
+        print('No person identified for face ID {} in {}.'.format(person.face_id, os.path.basename(image.name)))
 
 print()
 '''
