@@ -12,8 +12,7 @@ def config():
     return subscription_key, face_api_url
 
 
-image_path = os.path.join(r'C:\Users\Jordi\PycharmProjects\AI102Files\Extract_facial_information_from_images\CapFrame'
-                          r'.jpg')
+image_path = os.path.join(r'/Computer_Vision/Extract_facial_information_from_images/CapFrame.jpg')
 image_data = open(image_path, "rb")
 
 subscription_key = "<enter your key>"

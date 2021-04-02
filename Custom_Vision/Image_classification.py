@@ -5,10 +5,10 @@ from msrest.authentication import ApiKeyCredentials
 import time
 
 # Replace with valid values
-ENDPOINT = "<your API endpoint>"
-training_key = "<your training key>"
-prediction_key = "<your prediction key>"
-prediction_resource_id = "<your prediction resource id>"
+ENDPOINT = "<Your endpoint>"
+training_key = "<Your training key>"
+prediction_key = "<Your prediction key>"
+prediction_resource_id = "<Your prediction resource ID>"
 
 credentials = ApiKeyCredentials(in_headers={"Training-key": training_key})
 trainer = CustomVisionTrainingClient(ENDPOINT, credentials)
@@ -28,7 +28,7 @@ project = trainer.create_project("My New Project")
 hemlock_tag = trainer.create_tag(project.id, "Hemlock")
 cherry_tag = trainer.create_tag(project.id, "Japanese Cherry")
 
-base_image_location = "<your image location>"
+base_image_location = "<Your image location>"
 
 print("Adding images...")
 
@@ -53,7 +53,7 @@ if not upload_result.is_batch_successful:
 
 print ("Training...")
 iteration = trainer.train_project(project.id)
-while (iteration.status != "Completed"):
+while iteration.status != "Completed":
     iteration = trainer.get_iteration(project.id, iteration.id)
     print ("Training status: " + iteration.status)
     time.sleep(1)

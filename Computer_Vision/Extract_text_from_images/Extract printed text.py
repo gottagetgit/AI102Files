@@ -21,7 +21,7 @@ This example will extract, using OCR, printed text in an image, then print resul
 print("===== Detect Printed Text with OCR - local =====")
 print()
 # Get an image with printed text
-local_image_printed_text_path = "Images\\printed_text.jpg"
+local_image_printed_text_path = "Images/printed_text.jpg"
 local_image_printed_text = open(local_image_printed_text_path, "rb")
 
 ocr_result_local = computervision_client.recognize_printed_text_in_stream(local_image_printed_text)
