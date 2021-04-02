@@ -21,7 +21,7 @@ credentials = ApiKeyCredentials(in_headers={"Training-key": training_key})
 trainer = CustomVisionTrainingClient(ENDPOINT, credentials)
 
 # Create a new project
-print("Creating project...")
+print ("Creating project...")
 project = trainer.create_project("My New Project")
 
 # Make two tags in the new project
@@ -37,8 +37,7 @@ image_list = []
 for image_num in range(1, 11):
     file_name = "hemlock_{}.jpg".format(image_num)
     with open(base_image_location + "images/Hemlock/" + file_name, "rb") as image_contents:
-        image_list.append(
-            ImageFileCreateEntry(name=file_name, contents=image_contents.read(), tag_ids=[hemlock_tag.id]))
+        image_list.append(ImageFileCreateEntry(name=file_name, contents=image_contents.read(), tag_ids=[hemlock_tag.id]))
 
 for image_num in range(1, 11):
     file_name = "japanese_cherry_{}.jpg".format(image_num)
@@ -52,23 +51,23 @@ if not upload_result.is_batch_successful:
         print("Image status: ", image.status)
     exit(-1)
 
-print("Training...")
+print ("Training...")
 iteration = trainer.train_project(project.id)
-while iteration.status != "Completed":
+while (iteration.status != "Completed"):
     iteration = trainer.get_iteration(project.id, iteration.id)
-    print("Training status: " + iteration.status)
+    print ("Training status: " + iteration.status)
     time.sleep(1)
 
 # The iteration is now trained. Publish it to the project endpoint
 trainer.publish_iteration(project.id, iteration.id, publish_iteration_name, prediction_resource_id)
-print("Done!")
+print ("Done!")
 
 # Now there is a trained endpoint that can be used to make a prediction
 prediction_credentials = ApiKeyCredentials(in_headers={"Prediction-key": prediction_key})
 predictor = CustomVisionPredictionClient(ENDPOINT, prediction_credentials)
 
 with open(base_image_location + "images/Test/test_image.jpg", "rb") as image_contents:
-    results = predictor.detect_image(
+    results = predictor.classify_image(
         project.id, publish_iteration_name, image_contents.read())
 
     # Display the results.
