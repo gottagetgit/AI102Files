@@ -75,11 +75,9 @@ scissors_image_regions = {
     "scissors_19": [0.333333343, 0.0274019931, 0.443627447, 0.852941155],
     "scissors_20": [0.158088237, 0.04047389, 0.6691176, 0.843137264]
 }
-# </snippet_tagging>
 
-# <snippet_upload>
 # Update this with the path to where you downloaded the images.
-base_image_location = "<path to repo directory>/cognitive-services-python-sdk-samples/samples/vision/"
+base_image_location = "<path to directory"
 
 # Go through the data table above and create the images
 print("Adding images...")
