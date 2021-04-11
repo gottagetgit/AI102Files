@@ -18,7 +18,7 @@ computervision_client = ComputerVisionClient(endpoint, CognitiveServicesCredenti
 Generate Thumbnail
 This example creates a thumbnail from both a local and URL image.
 '''
-print("===== Detect Brands - local =====")
+print("===== Generate Thumbnails - local =====")
 
 # Generate a thumbnail from a local image
 local_image_path_thumb = "Images/Faces.jpg"
@@ -41,10 +41,10 @@ with open("thumb_local.png", "wb") as f:
 
 print("Thumbnail saved to local folder.")
 print()
-print("===== Detect Brands - remote =====")
+print("===== Generate Thumbnails - remote =====")
 # Generate a thumbnail from a URL image
 # URL of faces
-remote_image_url_thumb = "https://raw.githubusercontent.com/gottagetgit/AI102Files/main/Analyze_images_using_Computer_Vision_API/Images/Faces.jpg"
+remote_image_url_thumb = "https://raw.githubusercontent.com/gottagetgit/AI102Files/main/Computer_Vision/Analyze_images_using_Computer_Vision_API/Images/Faces.jpg"
 
 print("Generating thumbnail from a URL image...")
 # Returns a Generator object, a thumbnail image binary (list).
