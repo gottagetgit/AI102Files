@@ -6,7 +6,7 @@ speech_key, service_region = "YourSubscriptionKey", "YourServiceRegion"
 speech_config = speechsdk.SpeechConfig(subscription=speech_key, region=service_region)
 
 # uncomment this line to change the voice used for synthesis
-# speech_config.speech_synthesis_voice_name = "en-CA-Linda"
+speech_config.speech_synthesis_voice_name = "en-CA-Linda"
 
 # Creates a speech synthesizer using the default speaker as audio output.
 speech_synthesizer = speechsdk.SpeechSynthesizer(speech_config=speech_config)
