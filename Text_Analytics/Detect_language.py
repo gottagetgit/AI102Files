@@ -4,8 +4,8 @@ from pprint import pprint
 
 import os
 
-subscription_key = "2f0dfd2f37b44aef85e2dcc1c6368fd3"
-endpoint = "https://azcogsvc.cognitiveservices.azure.com/"
+subscription_key = "YourCognitiveKey"
+endpoint = "YourCognitiveEndpoint"
 
 language_api_url = endpoint + "/text/analytics/v3.0/languages"
 
