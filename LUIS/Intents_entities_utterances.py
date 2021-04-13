@@ -17,9 +17,11 @@
 # https://docs.microsoft.com/azure/cognitive-services/luis/luis-concept-entity-types
 # https://docs.microsoft.com/azure/cognitive-services/luis/luis-concept-utterance
 
+import json
+import time
+
 from azure.cognitiveservices.language.luis.authoring import LUISAuthoringClient
 from msrest.authentication import CognitiveServicesCredentials
-import datetime, json, os, time
 
 authoring_key = 'YourAuthoringKey'
 authoring_endpoint = 'YourAuthoringEndpoint'
@@ -51,7 +53,7 @@ def create_app():
 #   Class - A hierarchical entity that will hold the flight class
 #           (First, Business, or Economy)
 #
-#   Flight - A composite entity represeting the flight (including
+#   Flight - A composite entity representing the flight (including
 #               class and destination)
 #
 # Creating an entity (or other LUIS object) returns its ID.
