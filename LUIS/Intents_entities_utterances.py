@@ -1,6 +1,24 @@
+# Microsoft Azure Language Understanding (LUIS) - Build App
+#
+# This script builds a LUIS app, entities, and intents using the Python
+# LUIS SDK.  A separate sample trains and publishes the app.
+#
+# This script requires the Cognitive Services LUIS Python module:
+#     python -m pip install azure-cognitiveservices-language-luis
+#
+# This script runs under Python 3.4 or later.
+
+# Be sure you understand how LUIS models work.  In particular, know what
+# intents, entities, and utterances are, and how they work together in the
+# context of a LUIS app. See the following:
+#
+# https://www.luis.ai/welcome
+# https://docs.microsoft.com/azure/cognitive-services/luis/luis-concept-intent
+# https://docs.microsoft.com/azure/cognitive-services/luis/luis-concept-entity-types
+# https://docs.microsoft.com/azure/cognitive-services/luis/luis-concept-utterance
+
 from azure.cognitiveservices.language.luis.authoring import LUISAuthoringClient
 from msrest.authentication import CognitiveServicesCredentials
-
 import datetime, json, os, time
 
 authoring_key = 'YourAuthoringKey'
@@ -12,8 +30,8 @@ client = LUISAuthoringClient(authoring_endpoint, CognitiveServicesCredentials(au
 
 def create_app():
     # Create a new LUIS app
-    app_name = "PictureBotLUIS"
-    app_desc = "Picture Bot app built with LUIS Python SDK."
+    app_name = "Demo"
+    app_desc = "Flight booking app built with LUIS Python SDK."
     app_version = "0.1"
     app_locale = "en-us"
 
@@ -23,25 +41,48 @@ def create_app():
                                   culture=app_locale))
 
     print("Created LUIS app {}\n    with ID {}".format(app_name, app_id))
-    add_intents(app_id, app_version)
-    add_entities(app_id, app_version)
     return app_id, app_version
 
 
-def add_intents(app_id, app_version):
-    intents = ["Greeting", "SearchPics", "OrderPic", "SharePic"]
-    for intent in intents:
-        intentId = client.model.add_intent(app_id, app_version, intent)
-        print("Intent {} {} added.".format(intent, intentId))
-
-
+# Declare entities:
+#
+#   Destination - A simple entity that will hold the flight destination
+#
+#   Class - A hierarchical entity that will hold the flight class
+#           (First, Business, or Economy)
+#
+#   Flight - A composite entity represeting the flight (including
+#               class and destination)
+#
+# Creating an entity (or other LUIS object) returns its ID.
+# We don't use IDs further in this script, so we don't keep the return value.
 def add_entities(app_id, app_version):
-    facetEntityId = client.model.add_entity(app_id, app_version, name="facet")
-    print("facetEntityId {} added.".format(facetEntityId))
+    destinationEntityId = client.model.add_entity(app_id, app_version, name="Destination")
+    print("destinationEntityId {} added.".format(destinationEntityId))
+
+    classEntityId = client.model.add_entity(app_id, app_version, name="Class")
+    print("classEntityId {} added.".format(classEntityId))
+
+    flightEntityId = client.model.add_entity(app_id, app_version, name="Flight")
+    print("flightEntityId {} added.".format(flightEntityId))
+
+
+# Declare an intent, FindFlights, that recognizes a user's Flight request
+# Creating an intent returns its ID, which we don't need, so don't keep.
+# <addIntents>
+def add_intents(app_id, app_version):
+    intentId = client.model.add_intent(app_id, app_version, "FindFlights")
+
+    print("Intent FindFlights {} added.".format(intentId))
 
 
 # Helper function for creating the utterance data structure.
 def create_utterance(intent, utterance, *labels):
+    """Add an example LUIS utterance from utterance text and a list of
+       labels.  Each label is a 2-tuple containing a label name and the
+       text within the utterance that represents that label.
+       Utterances apply to a specific intent, which must be specified."""
+
     text = utterance.lower()
 
     def label(name, value):
@@ -54,43 +95,31 @@ def create_utterance(intent, utterance, *labels):
                 entity_labels=[label(n, v) for (n, v) in labels])
 
 
+# Add example utterances for the intent.  Each utterance includes labels
+# that identify the entities within each utterance by index.  LUIS learns
+# how to find entities within user utterances from the provided examples.
+#
+# Example utterance: "find flights in economy to Madrid"
+# Labels: Flight -> "economy to Madrid" (composite of Destination and Class)
+#         Destination -> "Madrid"
+#         Class -> "economy"
+# <addUtterances>
 def add_utterances(app_id, app_version):
     # Now define the utterances
-    utterances = [create_utterance("SearchPic", "find outdoor pics",
-                                   ("facet", "outdoor")),
+    utterances = [create_utterance("FindFlights", "find flights in economy to Madrid",
+                                   ("Flight", "economy to Madrid"),
+                                   ("Destination", "Madrid"),
+                                   ("Class", "economy")),
 
-                  create_utterance("SearchPic", "are there pictures of a train?",
-                                   ("facet", "train")),
+                  create_utterance("FindFlights", "find flights to London in first class",
+                                   ("Flight", "London in first class"),
+                                   ("Destination", "London"),
+                                   ("Class", "first")),
 
-                  create_utterance("SearchPic", "find pictures of food",
-                                   ("facet", "food")),
-
-                  create_utterance("SearchPic", "search for photos of boys playing",
-                                   ("facet", "boys playing")),
-
-                  create_utterance("SearchPic", "give me colorful pictures",
-                                   ("facet", "colorful")),
-
-                  create_utterance("SearchPic", "show me beach pics",
-                                   ("facet", "beach")),
-
-                  create_utterance("SearchPic", "I want to find dog photos",
-                                   ("facet", "dog")),
-
-                  create_utterance("SearchPic", "find pictures of German shepherds",
-                                   ("facet", "German shepherds")),
-
-                  create_utterance("SearchPic", "search for pictures of men indoors",
-                                   ("facet", "men indoors")),
-
-                  create_utterance("SearchPic", "show me pictures of men wearing glasses",
-                                   ("facet", "men wearing glasses")),
-
-                  create_utterance("SearchPic", "I want to see pics of smiling people",
-                                   ("facet", "smiling people")),
-
-                  create_utterance("SearchPic", "show me baby pics",
-                                   ("facet", "baby"))]
+                  create_utterance("FindFlights", "find flights from seattle to London in first class",
+                                   ("Flight", "flights from seattle to London in first class"),
+                                   ("Destination", "London"),
+                                   ("Class", "first"))]
 
     # Add the utterances in batch. You may add any number of example utterances
     # for any number of intents in one call.
@@ -98,4 +127,60 @@ def add_utterances(app_id, app_version):
     print("{} example utterance(s) added.".format(len(utterances)))
 
 
-create_app()
+def train_app(app_id, app_version):
+    response = client.train.train_version(app_id, app_version)
+    waiting = True
+    while waiting:
+        info = client.train.get_status(app_id, app_version)
+
+        # get_status returns a list of training statuses, one for each model. Loop through them and make sure all are
+        # done.
+        waiting = any(map(lambda x: 'Queued' == x.details.status or 'InProgress' == x.details.status, info))
+        if waiting:
+            print("Waiting 10 seconds for training to complete...")
+            time.sleep(10)
+
+
+def publish_app(app_id, app_version):
+    responseEndpointInfo = client.apps.publish(app_id, app_version, is_staging=True)
+    print("Application published. Endpoint URL: " + responseEndpointInfo.endpoint_url)
+
+
+def predict(app_id, publishInfo, slot_name):
+    request = {"query": "Find flight to seattle"}
+
+    # Note be sure to specify, using the slot_name parameter, whether your application is in staging or production.
+    response = clientRuntime.prediction.get_slot_prediction(app_id=app_id, slot_name=slot_name,
+                                                            prediction_request=request)
+
+    print("Top intent: {}".format(response.prediction.top_intent))
+    print("Sentiment: {}".format(response.prediction.sentiment))
+    print("Intents: ")
+
+    for intent in response.prediction.intents:
+        print("\t{}".format(json.dumps(intent)))
+    print("Entities: {}".format(response.prediction.entities))
+
+
+print("Creating application...")
+app_id, app_version = create_app()
+print()
+
+print("Adding entities to application...")
+add_entities(app_id, app_version)
+print()
+
+print("Adding intents to application...")
+add_intents(app_id, app_version)
+print()
+
+print("Adding utterances to application...")
+add_utterances(app_id, app_version)
+print()
+
+print("Training application...")
+train_app(app_id, app_version)
+print()
+
+print("Publishing application...")
+publish_app(app_id, app_version)
