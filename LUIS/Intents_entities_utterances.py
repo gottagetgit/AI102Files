@@ -69,7 +69,6 @@ def add_entities(app_id, app_version):
 
 # Declare an intent, FindFlights, that recognizes a user's Flight request
 # Creating an intent returns its ID, which we don't need, so don't keep.
-# <addIntents>
 def add_intents(app_id, app_version):
     intentId = client.model.add_intent(app_id, app_version, "FindFlights")
 
@@ -103,7 +102,6 @@ def create_utterance(intent, utterance, *labels):
 # Labels: Flight -> "economy to Madrid" (composite of Destination and Class)
 #         Destination -> "Madrid"
 #         Class -> "economy"
-# <addUtterances>
 def add_utterances(app_id, app_version):
     # Now define the utterances
     utterances = [create_utterance("FindFlights", "find flights in economy to Madrid",
@@ -146,7 +144,7 @@ def publish_app(app_id, app_version):
     print("Application published. Endpoint URL: " + responseEndpointInfo.endpoint_url)
 
 
-def predict(app_id, publishInfo, slot_name):
+def predict(app_id, publishInfo, slot_name, clientRuntime=None):
     request = {"query": "Find flight to seattle"}
 
     # Note be sure to specify, using the slot_name parameter, whether your application is in staging or production.
