@@ -2,7 +2,7 @@ import azure.cognitiveservices.speech as speechsdk
 
 # Creates an instance of a speech config with specified subscription key and service region.
 # Replace with your own subscription key and service region (e.g., "westus").
-speech_key, service_region = "YourSubscriptionKey", "YourServiceRegion"
+speech_key, service_region = "YourKey", "YourRegion"
 speech_config = speechsdk.SpeechConfig(subscription=speech_key, region=service_region)
 
 # uncomment this line to change the voice used for synthesis
@@ -32,7 +32,7 @@ elif result.reason == speechsdk.ResultReason.Canceled:
 
 # Creates an audio configuration that points to an audio file.
 # Replace with your own audio filename.
-audio_filename = "<FileLocation>\\text-to-speech-py.wav"
+audio_filename = "C:\\Users\\Jordi\\PycharmProjects\\AI102Files\\Speech\\Media\\text-to-speech-py.wav"
 audio_output = speechsdk.audio.AudioOutputConfig(filename=audio_filename)
 
 # Creates a synthesizer with the given settings

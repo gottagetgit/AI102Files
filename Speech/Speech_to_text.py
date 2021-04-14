@@ -4,10 +4,11 @@ import azure.cognitiveservices.speech as speechsdk
 In this exercise you will see an example of a speech to text translations from a local file.
 '''
 
-speech_key, service_region = "YourSubscriptionKey", "YourServiceRegion"
+speech_key, service_region = "YourKey", "YourRegion"
 speech_config = speechsdk.SpeechConfig(subscription=speech_key, region=service_region)
 
-audio_input = speechsdk.AudioConfig(filename="<FileLocation>\\narration.wav")
+audio_input = speechsdk.AudioConfig(filename="C:\\Users\\Jordi\\PycharmProjects\\AI102Files\\Speech\\Media\\narration"
+                                             ".wav")
 
 speech_recognizer = speechsdk.SpeechRecognizer(speech_config=speech_config, audio_config=audio_input)
 print("Recognizing first result...")
@@ -28,7 +29,7 @@ elif result.reason == speechsdk.ResultReason.Canceled:
 In this exercise you will see an example of listening for speech from a microphone and translating it to text output.
 '''
 
-speech_key, service_region = "YourSubscriptionKey", "YourServiceRegion"
+speech_key, service_region = "820f0a6b22524842acae9c5d176bd843", "westeurope"
 speech_config = speechsdk.SpeechConfig(subscription=speech_key, region=service_region)
 
 speech_recognizer = speechsdk.SpeechRecognizer(speech_config=speech_config)
