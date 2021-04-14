@@ -2,10 +2,8 @@ import requests
 # pprint is used to format the JSON response
 from pprint import pprint
 
-import os
-
-subscription_key = "YourCognitiveKey"
-endpoint = "YourCognitiveEndpoint"
+subscription_key = "YourKey"
+endpoint = "YourEndpoint"
 
 language_api_url = endpoint + "/text/analytics/v3.0/languages"
 

@@ -2,19 +2,19 @@ from pip._vendor import requests
 # pprint is used to format the JSON response
 from pprint import pprint
 
-import os
-
 # variables to store subscription key and root URL for the Cognitive Service resource
-subscription_key = "YourCognitiveKey"
-endpoint = "YourCognitiveEndpoint"
+subscription_key = "YourKey"
+endpoint = "YourEndpoint"
 
 # append the Text Analytics endpoint information to the URL
 entities_url = endpoint + "/text/analytics/v2.1/entities"
 
 # variable to store a JSON formatted document that contains two entries in a JSON array.
 documents = {"documents": [
-    {"id": "1", "text": "Microsoft was founded by Bill Gates and Paul Allen on April 4, 1975, to develop and sell BASIC interpreters for the Altair 8800."},
-    {"id": "2", "text": "La sede principal de Microsoft se encuentra en la ciudad de Redmond, a 21 kilómetros de Seattle."}
+    {"id": "1", "text": "Microsoft was founded by Bill Gates and Paul Allen on April 4, 1975, to develop and sell "
+                        "BASIC interpreters for the Altair 8800."},
+    {"id": "2", "text": "La sede principal de Microsoft se encuentra en la ciudad de Redmond, a 21 kilómetros de "
+                        "Seattle."}
 ]}
 
 # Setup the header information for the REST request passing in the subscription key

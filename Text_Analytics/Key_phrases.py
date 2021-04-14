@@ -1,10 +1,9 @@
-import os
 from azure.cognitiveservices.language.textanalytics import TextAnalyticsClient
 from msrest.authentication import CognitiveServicesCredentials
 
 # variables to store subscription key and root URL for the Cognitive Service resource
-subscription_key = "YourCognitiveKey"
-endpoint = "YourCognitiveEndpoint"
+subscription_key = "YourKey"
+endpoint = "YourEndpoint"
 
 
 def authenticateclient():
