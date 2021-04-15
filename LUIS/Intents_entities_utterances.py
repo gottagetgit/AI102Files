@@ -23,8 +23,8 @@ import time
 from azure.cognitiveservices.language.luis.authoring import LUISAuthoringClient
 from msrest.authentication import CognitiveServicesCredentials
 
-authoring_key = 'YourAuthoringKey'
-authoring_endpoint = 'YourAuthoringEndpoint'
+authoring_key = '5b2605f9d59e4420b016a860cd81a485'
+authoring_endpoint = 'https://azluisdemo-authoring.cognitiveservices.azure.com/'
 
 # Instantiate a LUIS client
 client = LUISAuthoringClient(authoring_endpoint, CognitiveServicesCredentials(authoring_key))

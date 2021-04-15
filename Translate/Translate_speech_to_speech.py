@@ -1,6 +1,6 @@
 import azure.cognitiveservices.speech as speechsdk
 
-speech_key, service_region = "YourSubscriptionKey", "YourServiceRegion"
+speech_key, service_region = "YourKey", "YourRegion"
 
 
 def translate_speech_to_speech():
@@ -9,9 +9,6 @@ def translate_speech_to_speech():
     translation_config = speechsdk.translation.SpeechTranslationConfig(subscription=speech_key, region=service_region)
 
     speech_config = speechsdk.SpeechConfig(subscription=speech_key, region=service_region)
-
-    # Creates a speech synthesizer using the configured voice for audio output.
-    speech_synthesizer = speechsdk.SpeechSynthesizer(speech_config=speech_config)
 
     # Sets source and target languages. In this example, the service will translate a US English spoken input,
     # to French and Indonesian language spoken output Replace with the languages of your choice, from list found
@@ -82,4 +79,3 @@ def translate_speech_to_speech():
 
 
 translate_speech_to_speech()
-
