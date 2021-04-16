@@ -1,137 +1,53 @@
-# Microsoft Azure Language Understanding (LUIS) - Build App
-#
-# This script builds a LUIS app, entities, and intents using the Python
-# LUIS SDK.  A separate sample trains and publishes the app.
-#
-# This script requires the Cognitive Services LUIS Python module:
-#     python -m pip install azure-cognitiveservices-language-luis
-#
-# This script runs under Python 3.4 or later.
-
-# Be sure you understand how LUIS models work.  In particular, know what
-# intents, entities, and utterances are, and how they work together in the
-# context of a LUIS app. See the following:
-#
-# https://www.luis.ai/welcome
-# https://docs.microsoft.com/azure/cognitive-services/luis/luis-concept-intent
-# https://docs.microsoft.com/azure/cognitive-services/luis/luis-concept-entity-types
-# https://docs.microsoft.com/azure/cognitive-services/luis/luis-concept-utterance
+# To run this sample, install the following modules.
+# pip install azure-cognitiveservices-language-luis
 
 import json
 import time
 
+# <Dependencies>
 from azure.cognitiveservices.language.luis.authoring import LUISAuthoringClient
+from azure.cognitiveservices.language.luis.runtime import LUISRuntimeClient
 from msrest.authentication import CognitiveServicesCredentials
 
-authoring_key = 'YourKey'
-authoring_endpoint = 'YourEndpoint'
 
-# Instantiate a LUIS client
-client = LUISAuthoringClient(authoring_endpoint, CognitiveServicesCredentials(authoring_key))
+# </Dependencies>
 
+def quickstart():
+    # <VariablesYouChange>
+    authoringKey = '5b2605f9d59e4420b016a860cd81a485'
+    authoringEndpoint = 'https://azluisdemo-authoring.cognitiveservices.azure.com/'
+    predictionKey = '5b2605f9d59e4420b016a860cd81a485'
+    predictionEndpoint = 'https://azluisdemo.cognitiveservices.azure.com/'
+    # </VariablesYouChange>
 
-def create_app():
-    # Create a new LUIS app
-    app_name = "Demo"
-    app_desc = "Flight booking app built with LUIS Python SDK."
-    app_version = "0.1"
-    app_locale = "en-us"
+    # <VariablesYouDontNeedToChangeChange>
+    appName = "Contoso Pizza Company"
+    versionId = "0.1"
+    intentName = "OrderPizzaIntent"
+    # </VariablesYouDontNeedToChangeChange>
 
-    app_id = client.apps.add(dict(name=app_name,
-                                  initial_version_id=app_version,
-                                  description=app_desc,
-                                  culture=app_locale))
+    # <AuthoringCreateClient>
+    client = LUISAuthoringClient(authoringEndpoint, CognitiveServicesCredentials(authoringKey))
+    # </AuthoringCreateClient>
 
-    print("Created LUIS app {}\n    with ID {}".format(app_name, app_id))
-    return app_id, app_version
+    # Create app
+    app_id = create_app(client, appName, versionId)
 
+    # <AddIntent>
+    client.model.add_intent(app_id, versionId, intentName)
+    # </AddIntent>
 
-# Declare entities:
-#
-#   Destination - A simple entity that will hold the flight destination
-#
-#   Class - A hierarchical entity that will hold the flight class
-#           (First, Business, or Economy)
-#
-#   Flight - A composite entity representing the flight (including
-#               class and destination)
-#
-# Creating an entity (or other LUIS object) returns its ID.
-# We don't use IDs further in this script, so we don't keep the return value.
-def add_entities(app_id, app_version):
-    destinationEntityId = client.model.add_entity(app_id, app_version, name="Destination")
-    print("destinationEntityId {} added.".format(destinationEntityId))
+    # Add Entities
+    add_entities(client, app_id, versionId)
 
-    classEntityId = client.model.add_entity(app_id, app_version, name="Class")
-    print("classEntityId {} added.".format(classEntityId))
+    # Add labeled examples
+    add_labeled_examples(client, app_id, versionId, intentName)
 
-    flightEntityId = client.model.add_entity(app_id, app_version, name="Flight")
-    print("flightEntityId {} added.".format(flightEntityId))
-
-
-# Declare an intent, FindFlights, that recognizes a user's Flight request
-# Creating an intent returns its ID, which we don't need, so don't keep.
-def add_intents(app_id, app_version):
-    intentId = client.model.add_intent(app_id, app_version, "FindFlights")
-
-    print("Intent FindFlights {} added.".format(intentId))
-
-
-# Helper function for creating the utterance data structure.
-def create_utterance(intent, utterance, *labels):
-    """Add an example LUIS utterance from utterance text and a list of
-       labels.  Each label is a 2-tuple containing a label name and the
-       text within the utterance that represents that label.
-       Utterances apply to a specific intent, which must be specified."""
-
-    text = utterance.lower()
-
-    def label(name, value):
-        value = value.lower()
-        start = text.index(value)
-        return dict(entity_name=name, start_char_index=start,
-                    end_char_index=start + len(value))
-
-    return dict(text=text, intent_name=intent,
-                entity_labels=[label(n, v) for (n, v) in labels])
-
-
-# Add example utterances for the intent.  Each utterance includes labels
-# that identify the entities within each utterance by index.  LUIS learns
-# how to find entities within user utterances from the provided examples.
-#
-# Example utterance: "find flights in economy to Madrid"
-# Labels: Flight -> "economy to Madrid" (composite of Destination and Class)
-#         Destination -> "Madrid"
-#         Class -> "economy"
-def add_utterances(app_id, app_version):
-    # Now define the utterances
-    utterances = [create_utterance("FindFlights", "find flights in economy to Madrid",
-                                   ("Flight", "economy to Madrid"),
-                                   ("Destination", "Madrid"),
-                                   ("Class", "economy")),
-
-                  create_utterance("FindFlights", "find flights to London in first class",
-                                   ("Flight", "London in first class"),
-                                   ("Destination", "London"),
-                                   ("Class", "first")),
-
-                  create_utterance("FindFlights", "find flights from seattle to London in first class",
-                                   ("Flight", "flights from seattle to London in first class"),
-                                   ("Destination", "London"),
-                                   ("Class", "first"))]
-
-    # Add the utterances in batch. You may add any number of example utterances
-    # for any number of intents in one call.
-    client.examples.batch(app_id, app_version, utterances)
-    print("{} example utterance(s) added.".format(len(utterances)))
-
-
-def train_app(app_id, app_version):
-    response = client.train.train_version(app_id, app_version)
+    # <TrainAppVersion>
+    client.train.train_version(app_id, versionId)
     waiting = True
     while waiting:
-        info = client.train.get_status(app_id, app_version)
+        info = client.train.get_status(app_id, versionId)
 
         # get_status returns a list of training statuses, one for each model. Loop through them and make sure all are
         # done.
@@ -139,48 +55,189 @@ def train_app(app_id, app_version):
         if waiting:
             print("Waiting 10 seconds for training to complete...")
             time.sleep(10)
+        else:
+            print("trained")
+            waiting = False
+    # </TrainAppVersion>
 
+    # <PublishVersion>
+    responseEndpointInfo = client.apps.publish(app_id, versionId, is_staging=False)
+    # </PublishVersion>
 
-def publish_app(app_id, app_version):
-    responseEndpointInfo = client.apps.publish(app_id, app_version, is_staging=True)
-    print("Application published. Endpoint URL: " + responseEndpointInfo.endpoint_url)
+    # <PredictionCreateClient>
+    runtimeCredentials = CognitiveServicesCredentials(predictionKey)
+    clientRuntime = LUISRuntimeClient(endpoint=predictionEndpoint, credentials=runtimeCredentials)
+    # </PredictionCreateClient>
 
+    # <QueryPredictionEndpoint>
+    # Production == slot name
+    predictionRequest = {"query": "I want two small pepperoni pizzas with more salsa"}
 
-def predict(app_id, publishInfo, slot_name, clientRuntime=None):
-    request = {"query": "Find flight to seattle"}
-
-    # Note be sure to specify, using the slot_name parameter, whether your application is in staging or production.
-    response = clientRuntime.prediction.get_slot_prediction(app_id=app_id, slot_name=slot_name,
-                                                            prediction_request=request)
-
-    print("Top intent: {}".format(response.prediction.top_intent))
-    print("Sentiment: {}".format(response.prediction.sentiment))
+    predictionResponse = clientRuntime.prediction.get_slot_prediction(app_id, "Production", predictionRequest)
+    print("Top intent: {}".format(predictionResponse.prediction.top_intent))
+    print("Sentiment: {}".format(predictionResponse.prediction.sentiment))
     print("Intents: ")
 
-    for intent in response.prediction.intents:
+    for intent in predictionResponse.prediction.intents:
         print("\t{}".format(json.dumps(intent)))
-    print("Entities: {}".format(response.prediction.entities))
+    print("Entities: {}".format(predictionResponse.prediction.entities))
 
 
-print("Creating application...")
-app_id, app_version = create_app()
-print()
+# </QueryPredictionEndpoint>
 
-print("Adding entities to application...")
-add_entities(app_id, app_version)
-print()
+def create_app(client, appName, versionId):
+    # <AuthoringCreateApplication>
+    # define app basics
+    appDefinition = {
+        "name": appName,
+        "initial_version_id": versionId,
+        "culture": "en-us"
+    }
 
-print("Adding intents to application...")
-add_intents(app_id, app_version)
-print()
+    # create app
+    app_id = client.apps.add(appDefinition)
 
-print("Adding utterances to application...")
-add_utterances(app_id, app_version)
-print()
+    # get app id - necessary for all other changes
+    print("Created LUIS app with ID {}".format(app_id))
+    # </AuthoringCreateApplication>
 
-print("Training application...")
-train_app(app_id, app_version)
-print()
+    return app_id
 
-print("Publishing application...")
-publish_app(app_id, app_version)
+
+# </createApp>
+
+def add_entities(client, app_id, versionId):
+    # <AuthoringAddEntities>
+    # Add Prebuilt entity
+    client.model.add_prebuilt(app_id, versionId, prebuilt_extractor_names=["number"])
+
+    # define machine-learned entity
+    mlEntityDefinition = [
+        {
+            "name": "Pizza",
+            "children": [
+                {"name": "Quantity"},
+                {"name": "Type"},
+                {"name": "Size"}
+            ]
+        },
+        {
+            "name": "Toppings",
+            "children": [
+                {"name": "Type"},
+                {"name": "Quantity"}
+            ]
+        }]
+
+    # add entity to app
+    modelId = client.model.add_entity(app_id, versionId, name="Pizza order", children=mlEntityDefinition)
+
+    # define phraselist - add phrases as significant vocabulary to app
+    phraseList = {
+        "enabledForAllModels": False,
+        "isExchangeable": True,
+        "name": "QuantityPhraselist",
+        "phrases": "few,more,extra"
+    }
+
+    # add phrase list to app
+    phraseListId = client.features.add_phrase_list(app_id, versionId, phraseList)
+
+    # Get entity and subentities
+    modelObject = client.model.get_entity(app_id, versionId, modelId)
+    toppingQuantityId = get_grandchild_id(modelObject, "Toppings", "Quantity")
+    pizzaQuantityId = get_grandchild_id(modelObject, "Pizza", "Quantity")
+
+    # add model as feature to subentity model
+    prebuiltFeatureRequiredDefinition = {"model_name": "number", "is_required": True}
+    client.features.add_entity_feature(app_id, versionId, pizzaQuantityId, prebuiltFeatureRequiredDefinition)
+
+    # add model as feature to subentity model
+    prebuiltFeatureNotRequiredDefinition = {"model_name": "number"}
+    client.features.add_entity_feature(app_id, versionId, toppingQuantityId, prebuiltFeatureNotRequiredDefinition)
+
+    # add phrase list as feature to subentity model
+    phraseListFeatureDefinition = {"feature_name": "QuantityPhraselist", "model_name": None}
+    client.features.add_entity_feature(app_id, versionId, toppingQuantityId, phraseListFeatureDefinition)
+
+
+# </AuthoringAddEntities>
+
+
+def add_labeled_examples(client, app_id, versionId, intentName):
+    # <AuthoringAddLabeledExamples>
+    # Define labeled example
+    labeledExampleUtteranceWithMLEntity = {
+        "text": "I want two small seafood pizzas with extra cheese.",
+        "intentName": intentName,
+        "entityLabels": [
+            {
+                "startCharIndex": 7,
+                "endCharIndex": 48,
+                "entityName": "Pizza order",
+                "children": [
+                    {
+                        "startCharIndex": 7,
+                        "endCharIndex": 30,
+                        "entityName": "Pizza",
+                        "children": [
+                            {
+                                "startCharIndex": 7,
+                                "endCharIndex": 9,
+                                "entityName": "Quantity"
+                            },
+                            {
+                                "startCharIndex": 11,
+                                "endCharIndex": 15,
+                                "entityName": "Size"
+                            },
+                            {
+                                "startCharIndex": 17,
+                                "endCharIndex": 23,
+                                "entityName": "Type"
+                            }]
+                    },
+                    {
+                        "startCharIndex": 37,
+                        "endCharIndex": 48,
+                        "entityName": "Toppings",
+                        "children": [
+                            {
+                                "startCharIndex": 37,
+                                "endCharIndex": 41,
+                                "entityName": "Quantity"
+                            },
+                            {
+                                "startCharIndex": 43,
+                                "endCharIndex": 48,
+                                "entityName": "Type"
+                            }]
+                    }
+                ]
+            }
+        ]
+    }
+
+    print("Labeled Example Utterance:", labeledExampleUtteranceWithMLEntity)
+
+    # Add an example for the entity.
+    # Enable nested children to allow using multiple models with the same name.
+    # The quantity subentity and the phraselist could have the same exact name if this is set to True
+    client.examples.add(app_id, versionId, labeledExampleUtteranceWithMLEntity, {"enableNestedChildren": True})
+
+
+# </AuthoringAddLabeledExamples>
+
+# <AuthoringSortModelObject>
+def get_grandchild_id(model, childName, grandChildName):
+    theseChildren = next(filter((lambda child: child.name == childName), model.children))
+    theseGrandchildren = next(filter((lambda child: child.name == grandChildName), theseChildren.children))
+
+    grandChildId = theseGrandchildren.id
+
+    return grandChildId
+
+
+# </AuthoringSortModelObject>
+
+quickstart()
