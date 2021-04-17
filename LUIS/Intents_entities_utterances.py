@@ -14,10 +14,10 @@ from msrest.authentication import CognitiveServicesCredentials
 
 def quickstart():
     # <VariablesYouChange>
-    authoringKey = '5b2605f9d59e4420b016a860cd81a485'
-    authoringEndpoint = 'https://azluisdemo-authoring.cognitiveservices.azure.com/'
-    predictionKey = '5b2605f9d59e4420b016a860cd81a485'
-    predictionEndpoint = 'https://azluisdemo.cognitiveservices.azure.com/'
+    authoringKey = 'YourAuthoringKey'
+    authoringEndpoint = 'YourAuthoringEndpoint'
+    predictionKey = 'YourAuthoringKey'
+    predictionEndpoint = 'YourPredictionEndpoint'
     # </VariablesYouChange>
 
     # <VariablesYouDontNeedToChangeChange>
@@ -61,7 +61,7 @@ def quickstart():
     # </TrainAppVersion>
 
     # <PublishVersion>
-    responseEndpointInfo = client.apps.publish(app_id, versionId, is_staging=False)
+    client.apps.publish(app_id, versionId, is_staging=False)
     # </PublishVersion>
 
     # <PredictionCreateClient>
@@ -141,7 +141,7 @@ def add_entities(client, app_id, versionId):
     }
 
     # add phrase list to app
-    phraseListId = client.features.add_phrase_list(app_id, versionId, phraseList)
+    client.features.add_phrase_list(app_id, versionId, phraseList)
 
     # Get entity and subentities
     modelObject = client.model.get_entity(app_id, versionId, modelId)
