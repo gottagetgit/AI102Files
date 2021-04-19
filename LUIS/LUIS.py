@@ -8,9 +8,8 @@ import time
 from azure.cognitiveservices.language.luis.authoring import LUISAuthoringClient
 from azure.cognitiveservices.language.luis.runtime import LUISRuntimeClient
 from msrest.authentication import CognitiveServicesCredentials
-
-
 # </Dependencies>
+
 
 def quickstart():
     # <VariablesYouChange>
