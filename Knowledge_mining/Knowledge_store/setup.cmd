@@ -2,9 +2,9 @@
 SETLOCAL ENABLEDELAYEDEXPANSION
 
 rem Set values for your subscription and resource group
-set subscription_id=b9936f95-44b4-433d-be79-5a3db7765380
-set resource_group=azcogsvcdemo
-set location=westeurope
+set subscription_id=YOUR_SUBSCRIPTION_ID
+set resource_group=YOUR_RESOURCE_GROUP
+set location=YOUR_LOCATION_NAME
 
 rem Get random numbers to create unique resource names
 set unique_id=!random!!random!
