@@ -1,0 +1,9 @@
+{   
+    "name" : "margies",
+    "description" : "Documents for search.",  
+    "type" : "azureblob",
+    "credentials" :
+    { "connectionString" : "DefaultEndpointsProtocol=https;EndpointSuffix=core.windows.net;AccountName=ai102str2443922885;AccountKey=9IGCeXNfvLkVuNkmpQiibf5qvKwsP+yMeGJCtNeU4Pv6xcLNCCtyRlC54TxEMfkWAECQx3azmJ4YJ0oXQ6lHsA=="
+    },  
+    "container" : { "name" : "margies"}
+} 
