@@ -14,14 +14,15 @@ endpoint = "<enter your endpoint URL here>"
 
 computervision_client = ComputerVisionClient(endpoint, CognitiveServicesCredentials(subscription_key))
 
-remote_image_url = "https://raw.githubusercontent.com/gottagetgit/AI102Files/main/Computer_Vision/Analyze_images_using_Computer_Vision_API/Images/Landmark.jpg"
+remote_image_url = "https://raw.githubusercontent.com/gottagetgit/AI102Files/main/Computer_Vision" \
+                   "/Analyze_images_using_Computer_Vision_API/Images/Landmark.jpg "
 '''
 Describe an Image - remote
 This example describes the contents of an image with the confidence score.
 '''
 print("===== Describe an image - remote =====")
 # Call API
-description_results = computervision_client.describe_image(remote_image_url )
+description_results = computervision_client.describe_image(remote_image_url)
 
 # Get the captions (descriptions) from the response, with confidence level
 print("Description of remote image: ")
