@@ -21,7 +21,7 @@ credentials = ApiKeyCredentials(in_headers={"Training-key": training_key})
 trainer = CustomVisionTrainingClient(ENDPOINT, credentials)
 
 # Create a new project
-print ("Creating project...")
+print("Creating project...")
 project = trainer.create_project("My New Project")
 
 # Make two tags in the new project
@@ -51,16 +51,16 @@ if not upload_result.is_batch_successful:
         print("Image status: ", image.status)
     exit(-1)
 
-print ("Training...")
+print("Training...")
 iteration = trainer.train_project(project.id)
 while iteration.status != "Completed":
     iteration = trainer.get_iteration(project.id, iteration.id)
-    print ("Training status: " + iteration.status)
+    print("Training status: " + iteration.status)
     time.sleep(1)
 
 # The iteration is now trained. Publish it to the project endpoint
 trainer.publish_iteration(project.id, iteration.id, publish_iteration_name, prediction_resource_id)
-print ("Done!")
+print("Done!")
 
 # Now there is a trained endpoint that can be used to make a prediction
 prediction_credentials = ApiKeyCredentials(in_headers={"Prediction-key": prediction_key})

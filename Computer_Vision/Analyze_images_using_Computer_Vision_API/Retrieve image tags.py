@@ -14,7 +14,8 @@ endpoint = "<enter your endpoint URL here>"
 
 computervision_client = ComputerVisionClient(endpoint, CognitiveServicesCredentials(subscription_key))
 
-remote_image_url = "https://raw.githubusercontent.com/gottagetgit/AI102Files/main/Computer_Vision/Analyze_images_using_Computer_Vision_API/Images/Landmark.jpg"
+remote_image_url = "https://raw.githubusercontent.com/gottagetgit/AI102Files/main/Computer_Vision" \
+                   "/Analyze_images_using_Computer_Vision_API/Images/Landmark.jpg "
 
 '''
 Tag an Image - remote
@@ -22,7 +23,7 @@ This example returns a tag (key word) for each thing in the image.
 '''
 print("===== Tag an image - remote =====")
 # Call API with remote image
-tags_result_remote = computervision_client.tag_image(remote_image_url )
+tags_result_remote = computervision_client.tag_image(remote_image_url)
 
 # Print results with confidence score
 print("Tags in the remote image: \n")

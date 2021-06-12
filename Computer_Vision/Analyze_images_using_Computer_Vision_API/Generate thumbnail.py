@@ -44,7 +44,8 @@ print()
 print("===== Generate Thumbnails - remote =====")
 # Generate a thumbnail from a URL image
 # URL of faces
-remote_image_url_thumb = "https://raw.githubusercontent.com/gottagetgit/AI102Files/main/Computer_Vision/Analyze_images_using_Computer_Vision_API/Images/Faces.jpg"
+remote_image_url_thumb = "https://raw.githubusercontent.com/gottagetgit/AI102Files/main/Computer_Vision" \
+                         "/Analyze_images_using_Computer_Vision_API/Images/Faces.jpg "
 
 print("Generating thumbnail from a URL image...")
 # Returns a Generator object, a thumbnail image binary (list).

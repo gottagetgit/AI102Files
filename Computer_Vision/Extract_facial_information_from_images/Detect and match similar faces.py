@@ -21,7 +21,8 @@ endpoint = "<enter your endpoint URL here>"
 face_client = FaceClient(endpoint, CognitiveServicesCredentials(subscription_key))
 
 # Detect a face in an image that contains a single face
-single_face_image_url = 'https://www.biography.com/.image/t_share/MTQ1MzAyNzYzOTgxNTE0NTEz/john-f-kennedy---mini-biography.jpg'
+single_face_image_url = 'https://www.biography.com/.image/t_share/MTQ1MzAyNzYzOTgxNTE0NTEz/john-f-kennedy---mini' \
+                        '-biography.jpg '
 single_image_name = os.path.basename(single_face_image_url)
 # We use detection model 3 to get better performance.
 detected_faces = face_client.face.detect_with_url(url=single_face_image_url, detection_model='detection_03')
@@ -33,7 +34,7 @@ if not detected_faces:
 print("==== Detect faces in an image ===")
 print()
 print('Detected face ID from', single_image_name, ':')
-for face in detected_faces: print (face.face_id)
+for face in detected_faces: print(face.face_id)
 
 # Save this ID for use in Find Similar
 first_image_face_ID = detected_faces[0].face_id

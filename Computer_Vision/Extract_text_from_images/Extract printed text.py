@@ -45,7 +45,8 @@ This example will extract, using OCR, printed text in an image, then print resul
 '''
 print("===== Detect Printed Text with OCR - remote =====")
 print()
-remote_printed_text_image_url = "https://raw.githubusercontent.com/Azure-Samples/cognitive-services-sample-data-files/master/ComputerVision/Images/printed_text.jpg"
+remote_printed_text_image_url = "https://raw.githubusercontent.com/Azure-Samples/cognitive-services-sample-data-files" \
+                                "/master/ComputerVision/Images/printed_text.jpg "
 
 ocr_result_remote = computervision_client.recognize_printed_text(remote_printed_text_image_url)
 for region in ocr_result_remote.regions:
@@ -69,7 +70,8 @@ print()
 print("===== Detect Printed Text with the Read API - remote =====")
 print()
 # Get an image with handwritten text
-remote_image_handw_text_url = "https://raw.githubusercontent.com/MicrosoftDocs/azure-docs/master/articles/cognitive-services/Computer-vision/Images/readsample.jpg"
+remote_image_handw_text_url = "https://raw.githubusercontent.com/MicrosoftDocs/azure-docs/master/articles/cognitive" \
+                              "-services/Computer-vision/Images/readsample.jpg "
 
 # Call API with URL and raw response (allows you to get the operation location)
 recognize_handw_results = computervision_client.read(remote_image_handw_text_url,  raw=True)

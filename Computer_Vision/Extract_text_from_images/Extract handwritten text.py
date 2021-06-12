@@ -20,10 +20,11 @@ This example will extract handwritten text in an image, then print results, line
 '''
 print("===== Batch Read File - remote =====")
 # Get an image with handwritten text
-remote_image_handw_text_url = "https://raw.githubusercontent.com/MicrosoftDocs/azure-docs/master/articles/cognitive-services/Computer-vision/Images/readsample.jpg"
+remote_image_handw_text_url = "https://raw.githubusercontent.com/MicrosoftDocs/azure-docs/master/articles/cognitive" \
+                              "-services/Computer-vision/Images/readsample.jpg "
 
 # Call API with URL and raw response (allows you to get the operation location)
-recognize_handw_results = computervision_client.read(remote_image_handw_text_url,  raw=True)
+recognize_handw_results = computervision_client.read(remote_image_handw_text_url, raw=True)
 
 # Get the operation location (URL with an ID at the end) from the response
 operation_location_remote = recognize_handw_results.headers["Operation-Location"]
