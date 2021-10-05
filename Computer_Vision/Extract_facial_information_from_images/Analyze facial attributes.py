@@ -16,7 +16,7 @@ image_path = os.path.join(r'/Computer_Vision/Extract_facial_information_from_ima
 image_data = open(image_path, "rb")
 
 subscription_key = "<enter your key>"
-face_api_url = "<place your endpoint URL here>"
+face_api_url = "<place the API URL here>"
 
 headers = {'Content-Type': 'application/octet-stream',
            'Ocp-Apim-Subscription-Key': subscription_key}
